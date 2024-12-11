@@ -1,0 +1,4 @@
+- [ ] Configure clang-format and clangd
+- [ ] Create debugging functions
+  - [ ] ultoa
+  - [ ] printf
