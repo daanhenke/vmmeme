@@ -1,4 +1,13 @@
 - [ ] Configure clang-format and clangd
 - [ ] Create debugging functions
+  - [ ] print string
   - [ ] ultoa
   - [ ] printf
+- [ ] Setup host processor structures
+  - [ ] gdt
+  - [ ] idt
+  - [ ] tss?!
+- [ ] Check virtualization support
+- [ ] Setup vmcs
+  - [ ] vmload
+  - [ ] vmenter
