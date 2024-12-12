@@ -8,5 +8,6 @@ project('hypervisor', ['c', 'cpp'],
   ]
 )
 
+subdir('assets')
 subdir('uefi')
 subdir('hypervisor')

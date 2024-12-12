@@ -1,22 +1,32 @@
-from os.path import join
+from os.path import join, isfile, isdir
 from pycdlib import PyCdlib
 from io import BytesIO
-from os import stat
+from os import stat, listdir
 
+def add_directory_to_iso(iso, source_dir, iso_path="/"):
+  for entry in listdir(source_dir):
+    full_path = join(source_dir, entry)
+    iso_entry_path = f"{iso_path}/{entry}"
 
-def add_file_to_iso(iso: PyCdlib, source_path: str, file_path: str):
-    full_path = join(source_path, file_path)
-    file_stats = stat(full_path)
-    with open(full_path, 'rb') as file:
-        buf = BytesIO(file.read())
-        iso.add_fp(buf, file_stats.st_size, '/' + file_path)
+    if isdir(full_path):
+      # Add directory to ISO
+      iso.add_directory(iso_entry_path)
+      # Recursively add the contents of the directory
+      add_directory_to_iso(iso, full_path, iso_entry_path)
+    elif isfile(full_path):
+      iso.add_file(full_path, iso_entry_path.upper())
+    else:
+      print(f"Skipping unsupported file type: {full_path}")
 
-def create_iso(output_path: str, source_path: str):
-    iso = PyCdlib()
-    iso.new()
-    add_file_to_iso(iso, source_path, 'EFI/BOOT/BOOTX64.EFI')
+# Example usage
+def create_iso_with_directory(source_dir, output_iso):
+  iso = PyCdlib()
+  iso.new()
 
-    with open(output_path, 'wb') as output_file:
-      iso.write_fp(output_file)
+  add_directory_to_iso(iso, source_dir)
 
-create_iso('./build/rootfs.iso', './dist')
+  # Write the ISO to the specified output file
+  iso.write(output_iso)
+  iso.close()
+
+create_iso_with_directory('dist/bootfs', './dist/bootfs.iso')

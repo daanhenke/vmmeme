@@ -20,7 +20,7 @@ namespace efil
             auto chr = string[stringIndex++];
             buffer[bufferIndex++] = static_cast<wchar_t>(chr);
 
-            if (bufferIndex >= 1023)
+            if (bufferIndex > 1023)
             {
                 buffer[bufferIndex] = L'\0';
                 LogWideString(buffer);

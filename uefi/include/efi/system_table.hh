@@ -23,6 +23,9 @@ namespace efi
         Handle                              ConsoleErrorHandle;
         protocol::SimpleTextOutputProtocol* ConsoleError;
 
+        RuntimeServices*                    RuntimeServices;
+        BootServices*                       BootServices;
+
         u64                                 ConfigurationTableEntryCount;
         void*                               ConfigurationTable;
     };

@@ -12,12 +12,12 @@ def copy(src: str, dest: str):
     copyfile(src, dest)
 
 
-copy('./build/hypervisor/hypervisor.efi', './dist/EFI/BOOT/BOOTX64.EFI')
+copy('./build/hypervisor/hypervisor.efi', './dist/bootfs/EFI/BOOT/BOOTX64.EFI')
 
 run([
     'qemu-system-x86_64',
       '-smbios', 'type=0,uefi=on',
       '-bios', './assets/blobs/DEBUGX64_OVMF.fd',
-      '-drive', 'format=raw,file=fat:rw:./dist',
+      '-drive', 'format=raw,file=fat:rw:./dist/bootfs',
       '-net', 'none'
 ])

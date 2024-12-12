@@ -1,6 +1,8 @@
 .PHONY: configure
-configure:
-	@[ ! -d "./build" ] && meson setup build --cross-file ./meson/x86_64-uefi-windows.cross.ini || true
+configure: build/.gitignore
+
+build/.gitignore:
+	meson setup build --cross-file ./meson/x86_64-uefi-windows.cross.ini
 
 .PHONY: hypervisor
 hypervisor: configure
